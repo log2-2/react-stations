@@ -42,6 +42,15 @@ export const App = () => {
       <p>犬の画像を表示するサイトです</p>
       {/* 犬の画像を取得できるAPI「Dog API」 */}
       <img src={dogUrl} alt={'犬の画像'} />
+      <button
+        onClick={() => {
+          setDogUrl(
+            'https://images.dog.ceo/breeds/poodle-medium/WhatsApp_Image_2022-08-06_at_4.48.38_PM.jpg',
+          )
+        }}
+      >
+        更新
+      </button>
     </div>
   )
 }
