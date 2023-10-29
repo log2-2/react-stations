@@ -36,21 +36,42 @@ export const App = () => {
     'https://images.dog.ceo/breeds/terrier-wheaten/n02098105_1234.jpg',
   )
 
+  function dogUrlUpdate() {
+    // APIの呼び出しにはasyncとawaitを用いる方法もある。
+    // .thenで繋げる方法を「Promiseチェーン」、
+    // asyncとawaitを用いる方法を「async/await」と呼ぶことが多い。
+
+    // 犬の画像を取得できるAPI「Dog API」
+
+    // APIエンドポイントにGETリクエストを送信する。
+    // fetch関数の引数にはデータのパスやURLを指定する。
+    // 成功した場合、データは次の.thenブロックに渡される。
+    // 失敗した場合、.catchブロックで処理される。
+    // APIからのデータの取得は非同期で行われる。
+    // .thenメソッドは前の処理が終了してから実行される。
+    fetch('https://dog.ceo/api/breeds/image/random')
+      // 取得したデータをJSON形式からJavaScriptのオブジェクトに変換する。
+      // .json()メソッドにより変換される。
+      // 成功した場合、データは次の.thenブロックに渡される。
+      // 失敗した場合、.catchブロックで処理される。
+      // オブジェクトへの変換は非同期で行われる。
+      .then(responce => {
+        if (!responce.ok) {
+          // エラー文はcatchメソッドに投げられる。
+          throw new Error('fetchに失敗しました。')
+        }
+        return responce.json()
+      })
+      .then(data => setDogUrl(data.message))
+      .catch(error => console.error('Error：', error))
+  }
+
   return (
     <div>
       <header>Dog アプリ</header>
       <p>犬の画像を表示するサイトです</p>
-      {/* 犬の画像を取得できるAPI「Dog API」 */}
       <img src={dogUrl} alt={'犬の画像'} />
-      <button
-        onClick={() => {
-          setDogUrl(
-            'https://images.dog.ceo/breeds/poodle-medium/WhatsApp_Image_2022-08-06_at_4.48.38_PM.jpg',
-          )
-        }}
-      >
-        更新
-      </button>
+      <button onClick={() => dogUrlUpdate()}>更新</button>
     </div>
   )
 }
