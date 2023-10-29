@@ -69,9 +69,13 @@ export const App = () => {
   return (
     <div>
       <header>Dog アプリ</header>
-      <p>犬の画像を表示するサイトです</p>
-      <img src={dogUrl} alt={'犬の画像'} />
-      <button onClick={() => dogUrlUpdate()}>更新</button>
+      <main>
+        <p>犬の画像を表示するサイトです。</p>
+        <div>
+          <img className="dogImage" src={dogUrl} alt={'犬の画像'} />
+          <button onClick={() => dogUrlUpdate()}>更新</button>
+        </div>
+      </main>
     </div>
   )
 }
