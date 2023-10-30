@@ -5,6 +5,7 @@ import './App.css'
 // コンポーネントを{}で囲う。
 import { Header } from './Header'
 import { Description } from './Description'
+import { DogListContainer } from './DogListContainer'
 
 // 関数の型を指定する。
 // 関数が引数を受け取らず、JSX.Element型の値を返すことを指定している。
@@ -17,6 +18,7 @@ export const App = () => {
     <div>
       <Header />
       <Description />
+      <DogListContainer />
     </div>
   )
 }
