@@ -47,3 +47,11 @@ main > div > button {
   margin-left: auto;
   margin-top: auto;
 }
+
+.breedsSelectWrapper {
+  text-align: center;
+}
+
+.breedsSelectWrapper > button {
+  margin-left: 10px;
+}

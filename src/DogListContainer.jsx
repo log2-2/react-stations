@@ -4,7 +4,8 @@ import BreedsSelect from './BreedsSelect'
 
 export const DogListContainer = () => {
   const [breeds, setBreeds] = useState([])
-  const [selectedBreed, setSelectedBreed] = useState('')
+  const [selectedBreed, setSelectedBreed] = useState('affenpinscher')
+  const [selectedBreedUrl, setSelectedBreedsUrl] = useState([])
   useEffect(() => {
     // 犬種がキーとなったオブジェクトを受け取る。
     fetch('https://dog.ceo/api/breeds/list/all')
@@ -26,6 +27,21 @@ export const DogListContainer = () => {
     // 変数が指定されている場合、その変数が変更されたときに呼び出される。
   }, [])
 
+  function selectedBreedsUrl(sb) {
+    fetch('https://dog.ceo/api/breed/' + sb + '/images/random/3')
+      .then(responce => {
+        if (!responce.ok) {
+          throw new Error('fetchに失敗しました。')
+        }
+        return responce.json()
+      })
+      .then(data => setSelectedBreedsUrl(data.message))
+
+      .catch(error => {
+        console.error('Error：', error)
+      })
+  }
+
   const handleSelectChanged = event => {
     // useStateフックは非同期的にステートを更新する
     setSelectedBreed(event.target.value)
@@ -39,14 +55,17 @@ export const DogListContainer = () => {
   // データが得られてから渡さなければいけない。
 
   return (
-    <>
+    <div className="breedsSelectWrapper">
       <BreedsSelect
         breeds={breeds}
         selectedBreed={selectedBreed}
         handleSelectChanged={handleSelectChanged}
       />
-      {/* {console.log(breeds)} */}
-    </>
+      <button onClick={() => selectedBreedsUrl(selectedBreed)}>表示</button>
+      {selectedBreedUrl.map((url, index) => (
+        <img key={index} src={url} alt={'犬の画像'} />
+      ))}
+    </div>
   )
 }
 
